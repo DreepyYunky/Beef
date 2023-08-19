@@ -1,2 +1,1 @@
-# Beef
- The Beefy GUI tookit
+# Beef, a simple GUI framework powered by SDL2
