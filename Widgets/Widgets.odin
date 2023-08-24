@@ -97,6 +97,7 @@ SetBgColor :: proc(color: sdl.Color = txtColor) {
         case Colors.Red:
             sdl.SetRenderDrawColor(renderer, 255, 0, 0, 1)
         
+        
     }
 }
 
