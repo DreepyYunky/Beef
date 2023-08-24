@@ -23,5 +23,8 @@ Blue : sdl.Color : {
 }
 
 Red : sdl.Color : {
-    
+    255,
+    0,
+    0,
+    1,
 }
