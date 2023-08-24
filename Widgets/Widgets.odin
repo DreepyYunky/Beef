@@ -3,6 +3,7 @@ import sdl "vendor:sdl2"
 import sdl_ttf "vendor:sdl2/ttf"
 import "core:fmt"
 import img "vendor:sdl2/image"
+import "Colors"
 
 @(private)
 txtColor: sdl.Color
@@ -84,7 +85,19 @@ NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPo
 
 @(export)
 SetBgColor :: proc(color: sdl.Color = txtColor) {
-    sdl.SetRenderDrawColor(renderer, color[0])
+    // Now I'm going to do a really complicated system in which I change the command based the color attr.
+    /* sdl.SetRenderDrawColor(renderer, color[0]) */
+    switch color {
+        case Colors.Black:
+            sdl.SetRenderDrawColor(renderer, 0, 0, 0, 1)
+        
+        case Colors.Blue:
+            sdl.SetRenderDrawColor(renderer,34, 69, 164, 1)
+        
+        case Colors.Red:
+            sdl.SetRenderDrawColor(renderer, 255, 0, 0, 1)
+        
+    }
 }
 
 @(export)
