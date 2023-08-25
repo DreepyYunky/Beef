@@ -48,11 +48,13 @@ window := sdl.CreateWindow(
     YPos,
     window_flags,
 )
+
 @(private)
 window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN
+
 @(export)
 NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPos) {
-    
+    using window
     /* window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN */
 
     if (window == nil) {
