@@ -13,3 +13,16 @@ main :: proc() {
     beef.NewText("Terminal.ttf", "Hello World", beef.Black)
 }
 ```
+
+# Welcome to the Remove SDL2 Dependency Branch
+
+## Why?
+
+### SDL2.dll
+
+The first issue I've felt is that SDL requires SDL2.dll which is the compiled version of the package
+
+### Just a Good challenge
+I like challenges
+
+**Please Contribute**
