@@ -5,6 +5,10 @@ import "core:fmt"
 import img "vendor:sdl2/image"
 import "Colors"
 
+App :: struct {
+    window: ^sdl.Window,
+}
+
 @(private)
 txtColor: sdl.Color
 
@@ -95,12 +99,6 @@ NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPo
     } */
     /* @(export=true)
     renderer := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED) */
-    sdl.RenderCopy(renderer, texture, nil, nil)
-    sdl.RenderPresent(renderer);
-	defer sdl.Quit()
-    NewWindow("Hi", 300, 300)
-    /* @export renderer := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED) */
-    assert(sdl_init == 0, sdl.GetErrorString())
 }
 
 @(export)
