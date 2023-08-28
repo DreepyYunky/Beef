@@ -79,7 +79,7 @@ NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPo
             if event.type == sdl.EventType.QUIT do quit = true
         }
         sdl.RenderCopy(renderer, texture, nil, nil)
-        sdl.RenderPresent(renderer);
+        sdl.RenderPresent(renderer)
 
         sdl.Delay(1000) // Delay for 1 second
     }
