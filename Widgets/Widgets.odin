@@ -55,7 +55,7 @@ window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN
 @(export)
 NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPos)
 {
-    using window
+    /* using window */
     /* window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN */
 
     window := sdl.CreateWindow(
@@ -73,7 +73,7 @@ NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPo
     /* renderer := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED) */
     event: sdl.Event
     assert(window != nil, sdl.GetErrorString())
-    quit: bool = true
+    quit: bool = false
     loop : for {
         if sdl.PollEvent(&event) {
             if event.type == sdl.EventType.QUIT do quit = true
@@ -121,4 +121,21 @@ SetBgColor :: proc(color: sdl.Color = txtColor) {
 NewImage :: proc(image: cstring) {
     img.Load(image)
     
+}
+
+// Handle Events isn't something accessible to the developer
+@(private)
+HandleEvents :: proc(event: ^sdl.Event) {
+    event : sdl.Event
+    if event.type == sdl.EventType.WINDOWEVENT
+    {
+        if event.window.windowID == sdl.GetWindowID(window)
+        {
+            if event.window.event == sdl.WindowEventID.RESIZED
+            {
+                XPos = event.window.data1
+                YPos = event.window.data2
+            }
+        }
+    }
 }
