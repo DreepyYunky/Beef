@@ -58,7 +58,7 @@ NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPo
     using window
     /* window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN */
 
-    window = sdl.CreateWindow(
+    window := sdl.CreateWindow(
         title,
         sdl.WINDOWPOS_CENTERED,
         sdl.WINDOWPOS_CENTERED,
@@ -73,7 +73,7 @@ NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPo
     /* renderer := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED) */
     event: sdl.Event
     assert(window != nil, sdl.GetErrorString())
-    quit: bool = false
+    quit: bool = true
     loop : for {
         if sdl.PollEvent(&event) {
             if event.type == sdl.EventType.QUIT do quit = true
@@ -83,6 +83,10 @@ NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPo
 
         sdl.Delay(1000) // Delay for 1 second
     }
+
+    /* for quit {
+        sdl.Delay(1000)
+    } */
     /* @(export=true)
     renderer := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED) */
     sdl.RenderCopy(renderer, texture, nil, nil)
