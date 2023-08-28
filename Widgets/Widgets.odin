@@ -55,6 +55,8 @@ window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN
 @(export)
 NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPos)
 {
+    sdl_init := sdl.Init(sdl.INIT_EVERYTHING)
+    assert(sdl_init != -1, sdl.GetErrorString())
     /* using window */
     /* window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN */
 
@@ -67,6 +69,9 @@ NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPo
         window_flags,
     )
 
+    assert(window != nil, sdl.GetErrorString())
+    defer CleanWin()
+
     if (window == nil) {
         fmt.println("Failed to Open Window")
     }
@@ -76,7 +81,8 @@ NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPo
     quit: bool = false
     loop : for {
         if sdl.PollEvent(&event) {
-            if event.type == sdl.EventType.QUIT do quit = true
+            if EndWin(&event) do break loop
+            HandleEvents(&event)
         }
         sdl.RenderCopy(renderer, texture, nil, nil)
         sdl.RenderPresent(renderer)
@@ -91,8 +97,6 @@ NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPo
     renderer := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED) */
     sdl.RenderCopy(renderer, texture, nil, nil)
     sdl.RenderPresent(renderer);
-
-    sdl_init := sdl.Init(sdl.INIT_EVERYTHING)
 	defer sdl.Quit()
     NewWindow("Hi", 300, 300)
     /* @export renderer := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED) */
@@ -138,4 +142,21 @@ HandleEvents :: proc(event: ^sdl.Event) {
             }
         }
     }
+}
+
+EndWin :: proc(event: ^sdl.Event) -> (exit: bool) {
+    exit = false
+    
+    if event.type == sdl.EventType.QUIT || event.key.keysym.scancode == .ESCAPE
+    {
+        exit = true
+    }
+
+    return
+}
+
+CleanWin :: proc() {
+    sdl_ttf.Quit()
+    sdl.Quit()
+    sdl.DestroyWindow(window)
 }
