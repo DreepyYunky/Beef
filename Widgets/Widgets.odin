@@ -58,6 +58,15 @@ NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPo
     using window
     /* window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN */
 
+    window = sdl.CreateWindow(
+        title,
+        sdl.WINDOWPOS_CENTERED,
+        sdl.WINDOWPOS_CENTERED,
+        xAxis,
+        yAxis,
+        window_flags,
+    )
+
     if (window == nil) {
         fmt.println("Failed to Open Window")
     }
