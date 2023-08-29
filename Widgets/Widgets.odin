@@ -142,6 +142,7 @@ HandleEvents :: proc(event: ^sdl.Event) {
     }
 }
 
+@(private)
 EndWin :: proc(event: ^sdl.Event) -> (exit: bool) {
     exit = false
     
@@ -153,6 +154,7 @@ EndWin :: proc(event: ^sdl.Event) -> (exit: bool) {
     return
 }
 
+@(private)
 CleanWin :: proc() {
     sdl_ttf.Quit()
     sdl.Quit()
