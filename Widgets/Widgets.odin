@@ -102,7 +102,7 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
 }
 
 @(export)
-SetBgColor :: proc(color: sdl.Color = txtColor) {
+SetBgColor :: proc(color: sdl.Color) {
     // Now I'm going to do a really complicated system in which I change the command based the color attr.
     /* sdl.SetRenderDrawColor(renderer, color[0]) */
     switch color {
