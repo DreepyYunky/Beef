@@ -110,7 +110,7 @@ SetBgColor :: proc(color: sdl.Color) {
             sdl.SetRenderDrawColor(renderer, 0, 0, 0, 1)
         
         case Colors.Blue:
-            sdl.SetRenderDrawColor(renderer,34, 69, 164, 1)
+            sdl.SetRenderDrawColor(renderer, 34, 69, 164, 1)
         
         case Colors.Red:
             sdl.SetRenderDrawColor(renderer, 255, 0, 0, 1)
