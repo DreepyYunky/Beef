@@ -1,9 +1,11 @@
 package demo
 import bf "shared:Beef/Widgets"
 import sdl "vendor:sdl2"
+import "shared:Beef/Widgets/Colors"
 
 main :: proc() {
-    bf.NewWindow("Demo Odin", 200, 200)
+    bf.NewWindow("The Beefy Demo", 450, 450)
     /* sdl.Init(sdl.INIT_VIDEO)
     SDLInit := sdl.Init(sdl.INIT_VIDEO) */
+    bf.SetBgColor(Colors.Black)
 }
