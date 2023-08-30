@@ -5,10 +5,6 @@ import "core:fmt"
 import img "vendor:sdl2/image"
 import "Colors"
 
-App :: struct {
-    window: ^sdl.Window,
-}
-
 @(private)
 txtColor: sdl.Color
 
@@ -44,34 +40,38 @@ YPos: i32
 renderer := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED)
 
 @(private)
-window := sdl.CreateWindow(
+/* window := sdl.CreateWindow(
     WinTitle,
     sdl.WINDOWPOS_CENTERED,
     sdl.WINDOWPOS_CENTERED,
     XPos,
     YPos,
     window_flags,
-)
+) */
+window: ^sdl.Window
 
 @(private)
 window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN
 
 @(export)
-NewWindow :: proc(title: cstring = WinTitle, xAxis: i32 = XPos, yAxis: i32 = YPos)
+NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
 {
+    WinTitle = title
+    XPos = xAxis
+    YPos = yAxis
     sdl_init := sdl.Init(sdl.INIT_EVERYTHING)
     assert(sdl_init != -1, sdl.GetErrorString())
     /* using window */
     /* window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN */
 
-    /* window = sdl.CreateWindow(
+    window = sdl.CreateWindow(
         title,
         sdl.WINDOWPOS_CENTERED,
         sdl.WINDOWPOS_CENTERED,
         xAxis,
         yAxis,
         window_flags,
-    ) */
+    )
 
     assert(window != nil, sdl.GetErrorString())
     defer CleanWin()
