@@ -31,9 +31,9 @@ NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txt
     sdl.FreeSurface(surface)
 }
 
-WinTitle: cstring
+/* WinTitle: cstring
 XPos: i32
-YPos: i32
+YPos: i32 */
 
 
 @(private)
@@ -56,9 +56,9 @@ window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN
 @(export)
 NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
 {
-    WinTitle = title
+    /* WinTitle = title
     XPos = xAxis
-    YPos = yAxis
+    YPos = yAxis */
     sdl_init := sdl.Init(sdl.INIT_EVERYTHING)
     assert(sdl_init != -1, sdl.GetErrorString())
     /* using window */
