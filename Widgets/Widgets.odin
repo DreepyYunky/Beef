@@ -5,6 +5,8 @@ import "core:fmt"
 import img "vendor:sdl2/image"
 import "Colors"
 
+event : sdl.Event
+
 @(private)
 txtColor: sdl.Color
 
@@ -27,13 +29,21 @@ NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txt
     ttf := sdl_ttf.Init()
     assert(ttf != -1, sdl.GetErrorString())
     sdl_ttf.RenderUTF8_Blended(Font, txt, color)
-    render: ^sdl.Renderer
-    sdl.FreeSurface(surface)
+    /* render: ^sdl.Renderer */
+    defer sdl.FreeSurface(surface)
+
+    scancode := event.key.keysym.scancode
+
+    #partial switch scancode {
+        // Increase
+        case .I:
+
+    }
 }
 
-/* WinTitle: cstring
+WinTitle: cstring
 XPos: i32
-YPos: i32 */
+YPos: i32
 
 
 @(private)
@@ -56,9 +66,9 @@ window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN
 @(export)
 NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
 {
-    /* WinTitle = title
+    WinTitle = title
     XPos = xAxis
-    YPos = yAxis */
+    YPos = yAxis
     sdl_init := sdl.Init(sdl.INIT_EVERYTHING)
     assert(sdl_init != -1, sdl.GetErrorString())
     /* using window */
@@ -128,7 +138,6 @@ NewImage :: proc(image: cstring) {
 // Handle Events isn't something accessible to the developer
 @(private)
 HandleEvents :: proc(event: ^sdl.Event) {
-    event : sdl.Event
     if event.type == sdl.EventType.WINDOWEVENT
     {
         if event.window.windowID == sdl.GetWindowID(window)
@@ -140,6 +149,9 @@ HandleEvents :: proc(event: ^sdl.Event) {
             }
         }
     }
+    if event.type != sdl.EventType.KEYDOWN && event.type != sdl.EventType.KEYDOWN do return
+
+    
 }
 
 @(private)
