@@ -31,14 +31,9 @@ NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txt
     sdl_ttf.RenderUTF8_Blended(Font, txt, color)
     /* render: ^sdl.Renderer */
     defer sdl.FreeSurface(surface)
+    dest_rect := sdl.Rect{}
 
-    scancode := event.key.keysym.scancode
-
-    #partial switch scancode {
-        // Increase
-        case .I:
-
-    }
+    sdl_ttf.SizeText(Font, txt, &dest_rect.w, &dest_rect.h)
 }
 
 WinTitle: cstring
