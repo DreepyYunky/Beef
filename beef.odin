@@ -2,7 +2,8 @@ package beef
 import sdl "vendor:sdl2"
 import "core:fmt"
 import "./Widgets"
-
+import "vendor:sdl2/ttf"
+import img "vendor:sdl2/image"
 
 event : sdl.Event
 
