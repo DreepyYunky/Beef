@@ -2,7 +2,7 @@
 
 ## NewWindow(title: cstring, xAxis: i32, yAxis: i32)
 
-Window Widget and the point where SDL2 is initialized.\
+Window Widget and the point where SDL2 is initialized.
 
 ## NewText(font: cstring, txt: cstring, color: sdl.Color)
 
