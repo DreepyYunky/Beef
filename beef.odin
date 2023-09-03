@@ -87,10 +87,19 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
     event: sdl.Event
     assert(window != nil, sdl.GetErrorString())
     quit: bool = false
+    // The loop that keeps the App up.
     loop : for {
         if sdl.PollEvent(&event) {
-            if EndWin(&event) do break loop
-            HandleEvents(&event)
+            if event.type == sdl.EventType.QUIT do break loop // This line allows for closing the window using the "X" on the window
+        }
+
+        if event.type == sdl.EventType.ESCAPE
+        {
+            #partial switch event.key.keysym.scancode
+            {
+                case .ESCAPE:
+                    break loop
+            }
         }
         sdl.RenderCopy(renderer, texture, nil, nil)
         sdl.RenderPresent(renderer)
@@ -130,7 +139,7 @@ NewImage :: proc(image: cstring) {
 }
 
 // Handle Events isn't something accessible to the developer
-@(private)
+/* @(private)
 HandleEvents :: proc(event: ^sdl.Event) {
     if event.type == sdl.EventType.WINDOWEVENT
     {
@@ -146,8 +155,8 @@ HandleEvents :: proc(event: ^sdl.Event) {
     if event.type != sdl.EventType.KEYDOWN && event.type != sdl.EventType.KEYDOWN do return
 
     
-}
-
+} */
+/* 
 @(private)
 EndWin :: proc(event: ^sdl.Event) -> (exit: bool) {
     exit = false
@@ -165,4 +174,4 @@ CleanWin :: proc() {
     sdl_ttf.Quit()
     sdl.Quit()
     sdl.DestroyWindow(window)
-}
+} */
