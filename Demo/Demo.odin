@@ -8,6 +8,5 @@ main :: proc() {
     /* sdl.Init(sdl.INIT_VIDEO)
     SDLInit := sdl.Init(sdl.INIT_VIDEO) */
     bf.SetBgColor(Colors.Black)
-    bf.MaximiseWindow()
     bf.NewText("Nerd Fond.ttf", "Hey dudes", Colors.Black)
 }

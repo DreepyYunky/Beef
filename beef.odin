@@ -1,5 +1,5 @@
 /*
-    BEEF: A simple, powerful SDL2-powered library, powered by Odin
+    BEEF: A simple, powerful SDL2-powered library, Made by Odin
     LICENSE:
 
     MIT License
