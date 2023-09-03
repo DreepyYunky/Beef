@@ -61,6 +61,13 @@ NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txt
     dest_rect := sdl.Rect{}
 
     ttf.SizeText(Font, txt, &dest_rect.w, &dest_rect.h)
+
+    scancode := event.key.keysym.scancode
+
+    #partial switch scancode {
+        case .I:
+            err_code := ttf.SetFontSize(game.font, game.font_size)
+    }
 }
 
 WinTitle: cstring
@@ -173,7 +180,7 @@ CleanWin :: proc() {
 }
 
 @(export)
-MaximiseWindow :: proc()
+Maximise :: proc() // Maximise or Maximize?
 {
     sdl.MaximizeWindow(window)
 }
