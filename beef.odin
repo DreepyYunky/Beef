@@ -1,8 +1,9 @@
 package beef
 import sdl "vendor:sdl2"
 import "core:fmt"
-import "./Widgets"
-
+import "shared:Beef/Colors"
+import "vendor:sdl2/ttf"
+import img "vendor:sdl2/image"
 
 event : sdl.Event
 
@@ -25,8 +26,8 @@ Font := ttf.OpenFont(Fnt, 80)
 
 @(export)
 NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txtColor) {
-    ttf := ttf.Init()
-    assert(ttf != -1, sdl.GetErrorString())
+    ttf_init := ttf.Init()
+    assert(ttf_init != -1, sdl.GetErrorString())
     ttf.RenderUTF8_Blended(Font, txt, color)
     /* render: ^sdl.Renderer */
     defer sdl.FreeSurface(surface)
@@ -91,20 +92,19 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
     loop : for {
         if sdl.PollEvent(&event) {
             if event.type == sdl.EventType.QUIT do break loop // This line allows for closing the window using the "X" on the window
-        }
-
-        if event.type == sdl.EventType.ESCAPE
-        {
-            #partial switch event.key.keysym.scancode
+            if event.type == sdl.EventType.KEYDOWN
             {
-                case .ESCAPE:
-                    break loop
+                #partial switch event.key.keysym.scancode
+                {
+                    case .ESCAPE:
+                        break loop
+                }
             }
         }
+
         sdl.RenderCopy(renderer, texture, nil, nil)
         sdl.RenderPresent(renderer)
 
-        sdl.Delay(1000) // Delay for 1 second
     }
 
     /* for quit {
@@ -175,3 +175,10 @@ CleanWin :: proc() {
     sdl.Quit()
     sdl.DestroyWindow(window)
 } */
+
+@(private)
+CleanWin :: proc() {
+    ttf.Quit()
+    sdl.Quit()
+    sdl.DestroyWindow(window)
+}
