@@ -165,44 +165,6 @@ NewImage :: proc(image: cstring) {
     
 }
 
-// Handle Events isn't something accessible to the developer
-/* @(private)
-HandleEvents :: proc(event: ^sdl.Event) {
-    if event.type == sdl.EventType.WINDOWEVENT
-    {
-        if event.window.windowID == sdl.GetWindowID(window)
-        {
-            if event.window.event == sdl.WindowEventID.RESIZED
-            {
-                XPos = event.window.data1
-                YPos = event.window.data2
-            }
-        }
-    }
-    if event.type != sdl.EventType.KEYDOWN && event.type != sdl.EventType.KEYDOWN do return
-
-    
-} */
-/* 
-@(private)
-EndWin :: proc(event: ^sdl.Event) -> (exit: bool) {
-    exit = false
-    
-    if event.type == sdl.EventType.QUIT || event.key.keysym.scancode == .ESCAPE
-    {
-        exit = true
-    }
-
-    return
-}
-
-@(private)
-CleanWin :: proc() {
-    sdl_ttf.Quit()
-    sdl.Quit()
-    sdl.DestroyWindow(window)
-} */
-
 @(private)
 CleanWin :: proc() {
     ttf.Quit()
