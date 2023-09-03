@@ -182,3 +182,9 @@ CleanWin :: proc() {
     sdl.Quit()
     sdl.DestroyWindow(window)
 }
+
+/* @(export)
+MaximiseWindow :: proc()
+{
+    sdl.MaximizeWindow(window)
+} */
