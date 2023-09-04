@@ -50,12 +50,15 @@ texture := sdl.CreateTextureFromSurface(renderer, surface)
 
 @(private)
 Fnt: cstring
+
 @(private)
 Font := ttf.OpenFont(Fnt, 80)
 
 @(export)
 NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txtColor) {
     ttf_init := ttf.Init()
+
+    if ttf_init < 0 do fmt.println("ERROR: FAILED TO INITIALIZE SDL_TTF")
     assert(ttf_init != -1, sdl.GetErrorString())
     ttf.RenderUTF8_Blended(Font, txt, color)
     /* render: ^sdl.Renderer */
@@ -104,7 +107,7 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
 
     if sdl_init < 0 do fmt.println("ERROR: FAILED TO INITIALIZED SDL2")
 
-    
+
     assert(sdl_init != -1, sdl.GetErrorString())
     /* using window */
     /* window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN */
@@ -174,8 +177,9 @@ SetBgColor :: proc(color: sdl.Color) {
 
 @(export)
 NewImage :: proc(image: cstring) {
-    img.Load(image)
-    
+    // Load the image
+    load := img.Load(image)
+    if load == nil do fmt.println("ERROR: FAILED TO LOAD %s!", image)
 }
 
 @(private)
