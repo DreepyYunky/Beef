@@ -25,6 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
+
+
 package beef
 import sdl "vendor:sdl2"
 import "core:fmt"
@@ -66,7 +68,7 @@ NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txt
 
     #partial switch scancode {
         case .I:
-            err_code := ttf.SetFontSize(game.font, game.font_size)
+            
     }
 }
 
@@ -99,6 +101,10 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
     XPos = xAxis
     YPos = yAxis
     sdl_init := sdl.Init(sdl.INIT_EVERYTHING)
+
+    if sdl_init < 0 do fmt.println("ERROR: FAILED TO INITIALIZED SDL2")
+
+    
     assert(sdl_init != -1, sdl.GetErrorString())
     /* using window */
     /* window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN */
