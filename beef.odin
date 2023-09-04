@@ -59,7 +59,9 @@ NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txt
     ttf_init := ttf.Init()
 
     if ttf_init < 0 do fmt.println("ERROR: FAILED TO INITIALIZE SDL_TTF")
+
     assert(ttf_init != -1, sdl.GetErrorString())
+
     ttf.RenderUTF8_Blended(Font, txt, color)
     /* render: ^sdl.Renderer */
     defer sdl.FreeSurface(surface)
@@ -68,10 +70,12 @@ NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txt
     ttf.SizeText(Font, txt, &dest_rect.w, &dest_rect.h)
 
     scancode := event.key.keysym.scancode
+    font_size : i32 = 20
 
     #partial switch scancode {
         case .I:
-            
+            err_code := ttf.SetFontSize(Font, font_size)
+            assert(err_code != -1, sdl.GetErrorString())
     }
 }
 
@@ -150,17 +154,12 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
 
     }
 
-    /* for quit {
-        sdl.Delay(1000)
-    } */
-    /* @(export=true)
-    renderer := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED) */
+    
 }
 
 @(export)
 SetBgColor :: proc(color: sdl.Color) {
     // Now I'm going to do a really complicated system in which I change the command based the color attr.
-    /* sdl.SetRenderDrawColor(renderer, color[0]) */
     switch color {
         case Colors.Black:
             sdl.SetRenderDrawColor(renderer, 0, 0, 0, 1)
