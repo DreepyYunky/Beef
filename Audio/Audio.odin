@@ -11,3 +11,7 @@ PlayAudio :: proc(frequency: i32, channels: i32, chunksize: i32)
 {
     
 }
+
+main :: proc() {
+    
+}
