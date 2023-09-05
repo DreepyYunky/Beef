@@ -150,6 +150,8 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
 
     }
 
+    if !sdl.SetHint(sdl.HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0") do fmt.println("ERROR: SDL CANNOT DISABLE COMPOSITOR BYPASS!\n")
+
     
 }
 
