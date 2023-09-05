@@ -34,7 +34,11 @@ import "shared:Beef/Colors"
 import "vendor:sdl2/ttf"
 import img "vendor:sdl2/image"
 
+
 event : sdl.Event
+
+
+IMG_FLAGS :: img.INIT_JPG | img.INIT_PNG | img.INIT_TIF | img.INIT_WEBP
 
 @(private)
 txtColor: sdl.Color
@@ -88,14 +92,6 @@ YPos: i32
 renderer := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED)
 
 @(private)
-/* window := sdl.CreateWindow(
-    WinTitle,
-    sdl.WINDOWPOS_CENTERED,
-    sdl.WINDOWPOS_CENTERED,
-    XPos,
-    YPos,
-    window_flags,
-) */
 window: ^sdl.Window
 
 @(private)
@@ -176,9 +172,13 @@ SetBgColor :: proc(color: sdl.Color) {
 
 @(export)
 NewImage :: proc(image: cstring) {
+
+    image_init := img.Init(IMG_FLAGS)
     // Load the image
     load := img.Load(image)
     if load == nil do fmt.println("ERROR: FAILED TO LOAD %s!", image)
+    screen: ^sdl.Surface
+    
 }
 
 @(private)
@@ -188,6 +188,7 @@ CleanWin :: proc() {
     sdl.DestroyWindow(window)
 }
 
+// Might remove this 
 @(export)
 Maximise :: proc() // Maximise or Maximize?
 {
