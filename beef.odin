@@ -174,6 +174,8 @@ SetBgColor :: proc(color: sdl.Color) {
 NewImage :: proc(image: cstring) {
 
     image_init := img.Init(IMG_FLAGS)
+
+    if ((image_init & IMG_FLAGS) != IMG_FLAGS) do fmt.println("ERROR: FAILED TO INITIALIZE SDL_IMAGE")
     // Load the image
     load := img.Load(image)
     if load == nil do fmt.println("ERROR: FAILED TO LOAD %s!", image)
