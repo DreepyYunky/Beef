@@ -37,7 +37,6 @@ import img "vendor:sdl2/image"
 
 event : sdl.Event
 
-
 IMG_FLAGS :: img.INIT_JPG | img.INIT_PNG | img.INIT_TIF | img.INIT_WEBP
 
 @(private)
@@ -127,10 +126,10 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
     if (window == nil) {
         fmt.println("Failed to Open Window")
     }
-    /* renderer := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED) */
     event: sdl.Event
     assert(window != nil, sdl.GetErrorString())
     quit: bool = false
+
     // The loop that keeps the App up.
     loop : for {
         if sdl.PollEvent(&event) {
@@ -160,8 +159,13 @@ SetBgColor :: proc(color: sdl.Color) {
     // Now I'm going to do a really complicated system in which I change the command based the color attr.
     switch color {
         case Colors.Black:
+            sdl.RenderClear(renderer);
             sdl.SetRenderDrawColor(renderer, 0, 0, 0, 1)
-        
+            rect : sdl.Rect = {100, 100, 200, 200}
+
+            sdl.RenderFillRect(renderer, &rect)
+            sdl.RenderPresent(renderer)
+
         case Colors.Blue:
             sdl.SetRenderDrawColor(renderer, 34, 69, 164, 1)
         
@@ -191,4 +195,3 @@ CleanWin :: proc() {
     sdl.Quit()
     sdl.DestroyWindow(window)
 }
-
