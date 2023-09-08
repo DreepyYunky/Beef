@@ -35,6 +35,12 @@ import "vendor:sdl2/ttf"
 import img "vendor:sdl2/image"
 
 
+@(private)
+Text :: struct {
+    tex: ^sdl.Texture,
+    dest: sdl.Rect,
+}
+
 event : sdl.Event
 
 IMG_FLAGS :: img.INIT_JPG | img.INIT_PNG | img.INIT_TIF | img.INIT_WEBP
@@ -58,7 +64,7 @@ Fnt: cstring
 Font := ttf.OpenFont(Fnt, 80)
 
 @(export)
-NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txtColor) {
+NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txtColor) -> Text {
     ttf_init := ttf.Init()
     surface = ttf.RenderText_Solid(Font, text, txtColor)
 
@@ -75,7 +81,10 @@ NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txt
 
     scancode := event.key.keysym.scancode
     font_size : i32 = 20
-
+    scale: i32 = 1
+    dest_rect.w *= scale
+    dest_rect.h *= scale
+    return Text {tex = texture, dest = dest_rect}
 }
 WinTitle: cstring
 XPos: i32
@@ -146,9 +155,7 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
 
     if !sdl.SetHint(sdl.HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0") do fmt.println("ERROR: SDL CANNOT DISABLE COMPOSITOR BYPASS!\n")
 
-    if renderer == nil {
-        fmt.println("ERROR: FAILED TO CREATE SDL2 RENDERER!")
-    }
+    
 }
 
 @(export)
@@ -191,4 +198,3 @@ CleanWin :: proc() {
     sdl.Quit()
     sdl.DestroyWindow(window)
 }
-
