@@ -1,5 +1,5 @@
 /*
-    BEEF: A simple, powerful SDL2-powered library, Made by Odin
+    BEEF: A simple, powerful SDL2-powered library, Made in Odin
     LICENSE:
 
     MIT License
@@ -84,11 +84,14 @@ NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txt
     scale: i32 = 1
     dest_rect.w *= scale
     dest_rect.h *= scale
+
+    // Render text
+    render := (XSize / 2) - (dest_rect.w / 2)
     return Text {tex = texture, dest = dest_rect}
 }
 WinTitle: cstring
-XPos: i32
-YPos: i32
+XSize: i32
+YSize: i32
 
 
 @(private)
@@ -104,16 +107,14 @@ window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN
 NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
 {
     WinTitle = title
-    XPos = xAxis
-    YPos = yAxis
+    XSize = xAxis
+    YSize = yAxis
     sdl_init := sdl.Init(sdl.INIT_EVERYTHING)
 
     if sdl_init < 0 do fmt.println("ERROR: FAILED TO INITIALIZED SDL2")
 
 
     assert(sdl_init != -1, sdl.GetErrorString())
-    /* using window */
-    /* window_flags := sdl.WINDOW_RESIZABLE | sdl.WINDOW_SHOWN */
 
     window = sdl.CreateWindow(
         title,
@@ -152,10 +153,6 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
         sdl.RenderPresent(renderer)
 
     }
-
-    if !sdl.SetHint(sdl.HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0") do fmt.println("ERROR: SDL CANNOT DISABLE COMPOSITOR BYPASS!\n")
-
-    
 }
 
 @(export)
