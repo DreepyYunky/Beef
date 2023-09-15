@@ -34,6 +34,11 @@ import "shared:Beef/Colors"
 import "vendor:sdl2/ttf"
 import img "vendor:sdl2/image"
 
+@(private)
+TextID :: enum {
+    Title,
+    Subtitle
+}
 
 @(private)
 Text :: struct {
@@ -63,11 +68,15 @@ Fnt: cstring
 @(private)
 Font := ttf.OpenFont(Fnt, 80)
 
+@(private)
+texts: [TextID]Text
+
 @(export)
 NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txtColor) -> Text {
     ttf_init := ttf.Init()
     surface = ttf.RenderText_Solid(Font, text, txtColor)
-
+    // Model the size of text.
+    scale: i32 = 1
     if ttf_init < 0 do fmt.println("ERROR: FAILED TO INITIALIZE SDL_TTF")
 
     assert(ttf_init != -1, sdl.GetErrorString())
@@ -81,12 +90,15 @@ NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txt
 
     scancode := event.key.keysym.scancode
     font_size : i32 = 20
-    scale: i32 = 1
     dest_rect.w *= scale
     dest_rect.h *= scale
 
     // Render text
-    render := (XSize / 2) - (dest_rect.w / 2)
+    dest_rect.x = (XSize / 2) - (dest_rect.w / 2)
+    dest_rect.y = (YSize / 2) + (dest_rect.w / 2)
+
+    sdl.RenderCopy(renderer, texture, nil, &dest_rect)
+    //sdl.RenderDrawLine(renderer)
     return Text {tex = texture, dest = dest_rect}
 }
 WinTitle: cstring

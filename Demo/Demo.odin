@@ -8,5 +8,5 @@ main :: proc() {
     /* sdl.Init(sdl.INIT_VIDEO)
     SDLInit := sdl.Init(sdl.INIT_VIDEO) */
     bf.SetBgColor(Colors.Red)
-    bf.NewText("Nerd Fond.ttf", "Hey dudes", Colors.Black)
+    bf.NewText("Nerd Font.ttf", "Hey dudes", Colors.Black)
 }
