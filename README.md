@@ -32,3 +32,7 @@ Image Renderer and decoder using SDL2's Image extension.
 ## SetBgColor(color: sdl.Color)
 
 Set Background Color (default is white)
+
+# The Future
+## Possible new ideas.
+***Beef4C:*** A C binding to Beef allowing developers to use Beef with both C and C++
