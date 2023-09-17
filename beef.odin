@@ -75,11 +75,15 @@ texts: [TextID]Text
 @(private)
 dest_rect := sdl.Rect{}
 
+// I'm now going to define variables that determine whether a function has been called or not
+@(private)
+NewText_called: bool = false
+
 @(export)
-NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txtColor) -> Text {
+NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txtColor) {
     ttf_init := ttf.Init()
     // Model the size of text.
-    
+    NewText_called = true
     if ttf_init < 0 do fmt.println("ERROR: FAILED TO INITIALIZE SDL_TTF")
 
     assert(ttf_init != -1, sdl.GetErrorString())
@@ -90,13 +94,7 @@ NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txt
 
     
     // Render text
-    text_render : Text = texts[TextID.text]
-    dest_rect.x = (XSize / 2) - (text_render.dest.h / 2)
-    dest_rect.y = (YSize / 2) + (text_render.dest.w)
-
-    sdl.RenderCopy(renderer, texture, nil, &dest_rect)
     //sdl.RenderDrawLine(renderer)
-    return Text {tex = texture, dest = dest_rect}
     
 }
 WinTitle: cstring
@@ -158,9 +156,16 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
                 }
             }
         }
-
+        if NewText_called == true {
+            // Render text
+            texts[TextID.text] = RenderText(text, 3)
+            text_render : Text = texts[TextID.text]
+            dest_rect.x = (XSize / 2) - (text_render.dest.h / 2)
+            dest_rect.y = (YSize / 2) + (text_render.dest.w)
+        }
         sdl.RenderCopy(renderer, texture, nil, nil)
-        sdl.RenderPresent(renderer)
+        //sdl.RenderPresent(renderer)
+        sdl.RenderClear(renderer)
 
     }
 }
@@ -206,7 +211,7 @@ CleanWin :: proc() {
     sdl.DestroyWindow(window)
 }
 
-RenderText :: proc(str: cstring, scale: i32 =1)
+RenderText :: proc(str: cstring, scale: i32 =1) -> Text
 {
     
     surface = ttf.RenderText_Solid(Font, text, txtColor)
@@ -217,4 +222,6 @@ RenderText :: proc(str: cstring, scale: i32 =1)
     font_size : i32 = 20
     dest_rect.w *= scale
     dest_rect.h *= scale
+
+    return Text {tex = texture, dest = dest_rect}
 }
