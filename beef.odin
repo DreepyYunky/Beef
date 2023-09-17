@@ -34,10 +34,11 @@ import "shared:Beef/Colors"
 import "vendor:sdl2/ttf"
 import img "vendor:sdl2/image"
 
+
+// Let's start by defining all the variables, structs and enums we'll need
 @(private)
 TextID :: enum {
-    Title,
-    Subtitle
+    text
 }
 
 @(private)
@@ -71,35 +72,32 @@ Font := ttf.OpenFont(Fnt, 80)
 @(private)
 texts: [TextID]Text
 
+@(private)
+dest_rect := sdl.Rect{}
+
 @(export)
 NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txtColor) -> Text {
     ttf_init := ttf.Init()
-    surface = ttf.RenderText_Solid(Font, text, txtColor)
     // Model the size of text.
-    scale: i32 = 1
+    
     if ttf_init < 0 do fmt.println("ERROR: FAILED TO INITIALIZE SDL_TTF")
 
     assert(ttf_init != -1, sdl.GetErrorString())
 
     ttf.RenderUTF8_Blended(Font, txt, color)
     /* render: ^sdl.Renderer */
-    defer sdl.FreeSurface(surface)
-    dest_rect := sdl.Rect{}
+    
 
-    ttf.SizeText(Font, txt, &dest_rect.w, &dest_rect.h)
-
-    scancode := event.key.keysym.scancode
-    font_size : i32 = 20
-    dest_rect.w *= scale
-    dest_rect.h *= scale
-
+    
     // Render text
-    dest_rect.x = (XSize / 2) - (dest_rect.w / 2)
-    dest_rect.y = (YSize / 2) + (dest_rect.w / 2)
+    text_render : Text = texts[TextID.text]
+    dest_rect.x = (XSize / 2) - (text_render.dest.h / 2)
+    dest_rect.y = (YSize / 2) + (text_render.dest.w)
 
     sdl.RenderCopy(renderer, texture, nil, &dest_rect)
     //sdl.RenderDrawLine(renderer)
     return Text {tex = texture, dest = dest_rect}
+    
 }
 WinTitle: cstring
 XSize: i32
@@ -206,4 +204,17 @@ CleanWin :: proc() {
     ttf.Quit()
     sdl.Quit()
     sdl.DestroyWindow(window)
+}
+
+RenderText :: proc(str: cstring, scale: i32 =1)
+{
+    
+    surface = ttf.RenderText_Solid(Font, text, txtColor)
+    defer sdl.FreeSurface(surface)
+    ttf.SizeText(Font, str, &dest_rect.w, &dest_rect.h)
+
+    scancode := event.key.keysym.scancode
+    font_size : i32 = 20
+    dest_rect.w *= scale
+    dest_rect.h *= scale
 }
