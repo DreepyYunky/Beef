@@ -4,7 +4,7 @@ This is a WIP, planned free-to-use GUI library powered by Odin's SDL2 binding.
 
 # Simple Hello World
 
-```rust
+```odin
 
 package main
 import beef "shared:Beef"
