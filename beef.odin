@@ -156,13 +156,7 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
                 }
             }
         }
-        if NewText_called == true {
-            // Render text
-            texts[TextID.text] = RenderText(text, 3)
-            text_render : Text = texts[TextID.text]
-            dest_rect.x = (XSize / 2) - (text_render.dest.h / 2)
-            dest_rect.y = (YSize / 2) + (text_render.dest.w)
-        }
+        
         sdl.RenderCopy(renderer, texture, nil, nil)
         //sdl.RenderPresent(renderer)
         sdl.RenderClear(renderer)
@@ -176,7 +170,7 @@ SetBgColor :: proc(color: sdl.Color) {
     switch color {
         case Colors.Black:
             sdl.RenderClear(renderer);
-            sdl.SetRenderDrawColor(renderer, 0, 0, 0, 1)
+            sdl.SetRenderDrawColor(renderer, 0, 0, 0, 100)
             rect : sdl.Rect = {100, 100, 200, 200}
 
             sdl.RenderFillRect(renderer, &rect)
@@ -224,4 +218,12 @@ RenderText :: proc(str: cstring, scale: i32 =1) -> Text
     dest_rect.h *= scale
 
     return Text {tex = texture, dest = dest_rect}
+}
+
+main :: proc() {
+    txt_loop : for {
+        if NewText_called == true {
+            
+        }
+    }
 }
