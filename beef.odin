@@ -79,6 +79,9 @@ dest_rect := sdl.Rect{}
 @(private)
 NewText_called: bool = false
 
+@(private)
+NewWindow_called: bool = false
+
 @(export)
 NewText :: proc(font: cstring = Fnt, txt: cstring = text, color: sdl.Color = txtColor) {
     ttf_init := ttf.Init()
@@ -143,25 +146,8 @@ NewWindow :: proc(title: cstring, xAxis: i32, yAxis: i32)
     assert(window != nil, sdl.GetErrorString())
     quit: bool = false
 
-    // The loop that keeps the App up.
-    loop : for {
-        if sdl.PollEvent(&event) {
-            if event.type == sdl.EventType.QUIT do break loop // This line allows for closing the window using the "X" on the window
-            if event.type == sdl.EventType.KEYDOWN
-            {
-                #partial switch event.key.keysym.scancode
-                {
-                    case .ESCAPE:
-                        break loop
-                }
-            }
-        }
-        
-        sdl.RenderCopy(renderer, texture, nil, nil)
-        //sdl.RenderPresent(renderer)
-        sdl.RenderClear(renderer)
-
-    }
+    NewWindow_called = true
+    
 }
 
 @(export)
@@ -221,9 +207,25 @@ RenderText :: proc(str: cstring, scale: i32 =1) -> Text
 }
 
 main :: proc() {
-    txt_loop : for {
-        if NewText_called == true {
-            
+    // The loop that keeps the App up.
+    loop : for {
+        if NewWindow_called == true {
+            if sdl.PollEvent(&event) {
+                if event.type == sdl.EventType.QUIT do break loop // This line allows for closing the window using the "X" on the window
+                if event.type == sdl.EventType.KEYDOWN
+                {
+                    #partial switch event.key.keysym.scancode
+                    {
+                        case .ESCAPE:
+                            break loop
+                    }
+                }
+            }
         }
+        
+        sdl.RenderCopy(renderer, texture, nil, nil)
+        //sdl.RenderPresent(renderer)
+        sdl.RenderClear(renderer)
+
     }
 }
