@@ -10,9 +10,7 @@ foreign import lib "system:Kernel32.lib"
 @private WinTitle: win.LPCWSTR
 @private X: i32
 @private Y: i32
-when ODIN_OS == .Windows
-{
-    NewWindow :: proc(title: win.LPCWSTR = WinTitle, XSize: i32 = X, YSize: i32 = Y)
+NewWindow :: proc(title: win.LPCWSTR = WinTitle, XSize: i32 = X, YSize: i32 = Y)
 {
 
     WindowProc :: proc(hwnd: win.HWND, uMsg: win.UINT, wParam: win.WPARAM, LParam: win.LPARAM) -> win.LRESULT
@@ -45,8 +43,6 @@ when ODIN_OS == .Windows
         return msg.lParam
     }
 }
-}
-
 when ODIN_OS != .Windows {
     #panic("NOT WINDOWS!!")
 }
