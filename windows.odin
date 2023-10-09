@@ -3,6 +3,7 @@ package beef
 import "core:fmt"
 import "./Widgets"
 import win "core:sys/windows"
+foreign import lib "system:Kernel32.lib"
 
 @private BEEF_DEF_POS :: 1000
 
