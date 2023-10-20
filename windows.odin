@@ -3,10 +3,10 @@ package beef
 import "core:fmt"
 import "./Widgets"
 import win "core:sys/windows"
-foreign import lib "system:Kernel32.lib"
+import "core:strings"
+import "core:c"
 
 @private BEEF_DEF_POS :: 1000
-
 @private WinTitle: win.LPCWSTR
 @private X: i32
 @private Y: i32
@@ -22,7 +22,13 @@ NewWindow :: proc(title: win.LPCWSTR = WinTitle, XSize: i32 = X, YSize: i32 = Y)
         return 0
     }
 
-    WinMain :: proc(hInstance: win.HINSTANCE, hPrevInstance: win.HINSTANCE, lpCmdLine: win.LPSTR, nCmdShow: i32) -> int
+    
+}
+when ODIN_OS != .Windows {
+    #panic("NOT WINDOWS!!")
+}
+
+WinMain :: proc(hInstance: win.HINSTANCE, hPrevInstance: win.HINSTANCE, lpCmdLine: win.LPSTR, nCmdShow: i32) -> int
     {
 
         hWnd: win.HWND
@@ -42,7 +48,3 @@ NewWindow :: proc(title: win.LPCWSTR = WinTitle, XSize: i32 = X, YSize: i32 = Y)
 
         return msg.lParam
     }
-}
-when ODIN_OS != .Windows {
-    #panic("NOT WINDOWS!!")
-}
