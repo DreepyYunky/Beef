@@ -47,4 +47,4 @@ WinMain :: proc(hInstance: win.HINSTANCE, hPrevInstance: win.HINSTANCE, lpCmdLin
         for win.GetMessageW(&msg, nil, 0, 0) do win.DispatchMessageW(&msg)
 
         return msg.lParam
-    }
+}

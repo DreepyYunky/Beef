@@ -26,3 +26,5 @@ The first issue I've felt is that SDL requires SDL2.dll which is the compiled ve
 I like challenges
 
 **Please Contribute**
+
+**Probably gonna remove this bit afterwards when this branch merges**
