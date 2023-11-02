@@ -24,8 +24,10 @@ NewWindow :: proc(title: win.LPCWSTR = WinTitle, XSize: i32 = X, YSize: i32 = Y)
 
     
 }
-when ODIN_OS != .Windows {
-    #panic("NOT WINDOWS!!")
+
+SendMessage :: proc(title: cstring, msg: cstring)
+{
+    
 }
 
 WinMain :: proc(hInstance: win.HINSTANCE, hPrevInstance: win.HINSTANCE, lpCmdLine: win.LPSTR, nCmdShow: i32) -> int
