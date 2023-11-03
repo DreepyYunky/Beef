@@ -3,7 +3,7 @@ package beef
 import "core:fmt"
 import "./Widgets"
 import win "core:sys/windows"
-import "core:strings"
+import str "core:strings"
 import "core:c"
 
 @private BEEF_DEF_POS :: 1000
@@ -40,7 +40,8 @@ WinMain :: proc(hInstance: win.HINSTANCE, hPrevInstance: win.HINSTANCE, lpCmdLin
         wc.hInstance = hInstance
         wc.hCursor = win.LoadCursorA(nil, win.IDC_ARROW)
         wc.lpszClassName = distinct "Beef"
-        
+        build: str.Builder
+        str.write_uint(&build, [&]WinTitle)
         hWnd = win.CreateWindowW(wc.lpszClassName, WinTitle, win.WS_OVERLAPPEDWINDOW | win.WS_VISIBLE, BEEF_DEF_POS, BEEF_DEF_POS, X, Y, nil, nil, hInstance, nil)
 
         win.ShowWindow(hWnd, nCmdShow);
